@@ -131,7 +131,7 @@ public class App {
             default:
                 break;
         }
-        
+
     }
 
     /**
@@ -141,7 +141,7 @@ public class App {
     public static void reservarHabitacio() {
         System.out.println("\n===== RESERVAR HABITACIÓ =====");
         //TODO:
-        
+        seleccionarTipusHabitacio();
     }
 
     /**
@@ -149,7 +149,27 @@ public class App {
      * retorna el nom del tipus.
      */
     public static String seleccionarTipusHabitacio() {
-        //TODO:
+        System.out.println("Tipus d'habitacions disponibles: ");
+        System.out.println("1. " + TIPUS_ESTANDARD);
+        System.out.println("2. " + TIPUS_SUITE);
+        System.out.println("3. " + TIPUS_DELUXE);
+        System.out.println();
+        int usuariTipusHab = 0;
+
+        do {
+            usuariTipusHab = llegirEnter("Seleccione un tipus d'habitació: ");
+        } while (usuariTipusHab < 1 || usuariTipusHab > 3);
+
+        switch (usuariTipusHab) {
+            case 1:
+                return TIPUS_ESTANDARD;
+            case 2:
+                return TIPUS_SUITE;
+            case 3:
+                return TIPUS_DELUXE;
+        }
+        
+
         return null;
     }
 

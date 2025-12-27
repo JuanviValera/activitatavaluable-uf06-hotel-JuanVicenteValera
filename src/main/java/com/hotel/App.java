@@ -1,4 +1,5 @@
 package com.hotel;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -139,25 +140,29 @@ public class App {
      * serveis addicionals, càlcul del preu total i generació del codi de reserva.
      */
     public static void reservarHabitacio() {
-        System.out.println("\n===== RESERVAR HABITACIÓ =====");
-        //TODO:
-        seleccionarTipusHabitacio();
+    System.out.println("\n===== RESERVAR HABITACIÓ =====");
+    // TODO:
+
+    String tipus = seleccionarTipusHabitacioDisponible();
+
+    if (tipus == null) {
+        return;
     }
+
+    System.out.println("Tipus seleccionat: " + tipus);
+}
+
 
     /**
      * Pregunta a l'usuari un tipus d'habitació en format numèric i
      * retorna el nom del tipus.
      */
     public static String seleccionarTipusHabitacio() {
-        System.out.println("Tipus d'habitacions disponibles: ");
-        System.out.println("1. " + TIPUS_ESTANDARD);
-        System.out.println("2. " + TIPUS_SUITE);
-        System.out.println("3. " + TIPUS_DELUXE);
-        System.out.println();
+
         int usuariTipusHab = 0;
 
         do {
-            usuariTipusHab = llegirEnter("Seleccione un tipus d'habitació: ");
+            usuariTipusHab = llegirEnter("\nSeleccione un tipus d'habitació: ");
         } while (usuariTipusHab < 1 || usuariTipusHab > 3);
 
         switch (usuariTipusHab) {
@@ -168,7 +173,6 @@ public class App {
             case 3:
                 return TIPUS_DELUXE;
         }
-        
 
         return null;
     }
@@ -179,17 +183,31 @@ public class App {
      * habitacions disponibles. En cas contrari, retorna null.
      */
     public static String seleccionarTipusHabitacioDisponible() {
-        System.out.println("\nTipus d'habitació disponibles:");
-        //TODO:
+
+    System.out.println("\nTipus d'habitació disponibles:");
+
+    mostrarInfoTipus(TIPUS_ESTANDARD);
+    mostrarInfoTipus(TIPUS_SUITE);
+    mostrarInfoTipus(TIPUS_DELUXE);
+
+    String tipus = seleccionarTipusHabitacio();
+
+    if (disponibilitatHabitacions.get(tipus) > 0) {
+        return tipus;
+    } else {
+        System.out.println("No queden habitacions disponibles d'aquest tipus.");
         return null;
     }
+}
+
+
 
     /**
      * Permet triar serveis addicionals (entre 0 i 4, sense repetir) i
      * els retorna en un ArrayList de String.
      */
     public static ArrayList<String> seleccionarServeis() {
-        //TODO:
+        // TODO:
 
         return null;
     }
@@ -199,7 +217,7 @@ public class App {
      * els serveis seleccionats i l'IVA.
      */
     public static float calcularPreuTotal(String tipusHabitacio, ArrayList<String> serveisSeleccionats) {
-        //TODO:
+        // TODO:
         return 0;
     }
 
@@ -208,7 +226,7 @@ public class App {
      * (entre 100 i 999) que no estiga repetit.
      */
     public static int generarCodiReserva() {
-        //TODO:
+        // TODO:
         return 0;
     }
 
@@ -218,7 +236,7 @@ public class App {
      */
     public static void alliberarHabitacio() {
         System.out.println("\n===== ALLIBERAR HABITACIÓ =====");
-         // TODO: Demanar codi, tornar habitació i eliminar reserva
+        // TODO: Demanar codi, tornar habitació i eliminar reserva
     }
 
     /**
@@ -233,7 +251,7 @@ public class App {
      * associades a un tipus d'habitació.
      */
     public static void llistarReservesPerTipus(int[] codis, String tipus) {
-         // TODO: Implementar recursivitat
+        // TODO: Implementar recursivitat
     }
 
     /**
@@ -242,7 +260,7 @@ public class App {
     public static void obtindreReserva() {
         System.out.println("\n===== CONSULTAR RESERVA =====");
         // TODO: Mostrar dades d'una reserva concreta
- 
+
     }
 
     /**
@@ -258,7 +276,7 @@ public class App {
      * Consulta i mostra en detall la informació d'una reserva.
      */
     public static void mostrarDadesReserva(int codi) {
-       // TODO: Imprimir tota la informació d'una reserva
+        // TODO: Imprimir tota la informació d'una reserva
     }
 
     // --------- MÈTODES AUXILIARS (PER MILLORAR LEGIBILITAT) ---------
@@ -271,9 +289,9 @@ public class App {
         int valor = 0;
         boolean correcte = false;
         while (!correcte) {
-                System.out.print(missatge);
-                valor = sc.nextInt();
-                correcte = true;
+            System.out.print(missatge);
+            valor = sc.nextInt();
+            correcte = true;
         }
         return valor;
     }

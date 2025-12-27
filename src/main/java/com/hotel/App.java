@@ -141,16 +141,30 @@ public class App {
      */
     public static void reservarHabitacio() {
     System.out.println("\n===== RESERVAR HABITACIÓ =====");
-    // TODO:
 
     String tipus = seleccionarTipusHabitacioDisponible();
-
     if (tipus == null) {
         return;
     }
 
-    System.out.println("Tipus seleccionat: " + tipus);
+    ArrayList<String> serveis = seleccionarServeis();
+
+    calcularPreuTotal(tipus, serveis);
+       int codi = generarCodiReserva();
+
+    ArrayList<String> dadesReserva = new ArrayList<>();
+    dadesReserva.add(tipus);
+    dadesReserva.addAll(serveis);
+
+    reserves.put(codi, dadesReserva);
+
+    int disponibles = disponibilitatHabitacions.get(tipus);
+    disponibilitatHabitacions.put(tipus, disponibles - 1);
+
+    System.out.println("\nReserva creada amb èxit!");
+    System.out.println("Codi de reserva: " + codi);
 }
+
 
 
     /**
@@ -206,29 +220,90 @@ public class App {
      * Permet triar serveis addicionals (entre 0 i 4, sense repetir) i
      * els retorna en un ArrayList de String.
      */
-    public static ArrayList<String> seleccionarServeis() {
-        // TODO:
+   public static ArrayList<String> seleccionarServeis() {
 
-        return null;
-    }
+    ArrayList<String> serveisSeleccionats = new ArrayList<>();
+    String resposta;
 
+    do {
+        System.out.print("Vols afegir un servei? (s/n): ");
+        sc.nextLine();
+        resposta = sc.nextLine().trim().toLowerCase();
+
+        if (resposta.equals("s")) {
+
+            System.out.println("\nServeis disponibles:");
+            System.out.println("1. " + SERVEI_ESMORZAR);
+            System.out.println("2. " + SERVEI_GIMNAS);
+            System.out.println("3. " + SERVEI_SPA);
+            System.out.println("4. " + SERVEI_PISCINA);
+
+            int opcio;
+            String servei = null;
+
+            do {
+                opcio = llegirEnter("Selecciona un servei (1-4): ");
+
+                switch (opcio) {
+                    case 1:
+                        servei = SERVEI_ESMORZAR;
+                        break;
+                    case 2:
+                        servei = SERVEI_GIMNAS;
+                        break;
+                    case 3:
+                        servei = SERVEI_SPA;
+                        break;
+                    case 4:
+                        servei = SERVEI_PISCINA;
+                        break;
+                }
+            } while (servei == null || serveisSeleccionats.contains(servei));
+
+            serveisSeleccionats.add(servei);
+        }
+
+    } while (resposta.equals("s"));
+
+    return serveisSeleccionats;
+}
+
+       
     /**
      * Calcula i retorna el cost total de la reserva, incloent l'habitació,
      * els serveis seleccionats i l'IVA.
      */
     public static float calcularPreuTotal(String tipusHabitacio, ArrayList<String> serveisSeleccionats) {
-        // TODO:
-        return 0;
+
+    float preuHabitacio = preusHabitacions.get(tipusHabitacio);
+    float preuServeis = 0;
+
+    for (String servei : serveisSeleccionats) {
+        preuServeis += preusServeis.get(servei);
     }
 
-    /**
-     * Genera i retorna un codi de reserva únic de tres xifres
-     * (entre 100 i 999) que no estiga repetit.
-     */
+    float subtotal = preuHabitacio + preuServeis;
+    float iva = subtotal * IVA;
+    float total = subtotal + iva;
+
+    System.out.println("\n=== DESGLOSSAMENT DEL PREU ===");
+    System.out.println("Habitació (" + tipusHabitacio + "): " + preuHabitacio + "€");
+    System.out.println("Serveis: " + preuServeis + "€");
+    System.out.println("Subtotal: " + subtotal + "€");
+    System.out.println("IVA (" + (IVA * 100) + "%): " + iva + "€");
+    System.out.println("Total amb IVA: " + total + "€");
+
+    return 0;
+}
     public static int generarCodiReserva() {
-        // TODO:
-        return 0;
-    }
+    int codi;
+
+    do {
+        codi = random.nextInt(900) + 100;
+    } while (reserves.containsKey(codi));
+
+    return codi;
+}
 
     /**
      * Permet alliberar una habitació utilitzant el codi de reserva

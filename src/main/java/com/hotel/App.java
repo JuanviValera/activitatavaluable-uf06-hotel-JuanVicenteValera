@@ -353,8 +353,15 @@ public class App {
     public static void obtindreReserva() {
         System.out.println("\n===== CONSULTAR RESERVA =====");
         // TODO: Mostrar dades d'una reserva concreta
+ int codi = llegirEnter("Introdueix el codi de reserva: ");
 
+    if (!reserves.containsKey(codi)) {
+        System.out.println("No existeix cap reserva amb aquest codi.");
+        return;
     }
+
+    mostrarDadesReserva(codi);
+}
 
     /**
      * Mostra totes les reserves existents per a un tipus d'habitació
@@ -370,7 +377,21 @@ public class App {
      */
     public static void mostrarDadesReserva(int codi) {
         // TODO: Imprimir tota la informació d'una reserva
+    
+    ArrayList<String> dades = reserves.get(codi);
+
+    System.out.println("\nCodi de reserva: " + codi);
+    System.out.println("Tipus d'habitació: " + dades.get(0));
+
+    if (dades.size() > 1) {
+        System.out.println("Serveis:");
+        for (int i = 1; i < dades.size(); i++) {
+            System.out.println(" " + dades.get(i));
+        }
+    } else {
+        System.out.println("Sense serveis");
     }
+}
 
     // --------- MÈTODES AUXILIARS (PER MILLORAR LEGIBILITAT) ---------
 

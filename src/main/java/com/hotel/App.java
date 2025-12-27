@@ -311,7 +311,7 @@ public class App {
         int codi = llegirEnter("Introdueix el codi de reserva: ");
 
         if (!reserves.containsKey(codi)) {
-            System.out.println("No existeix cap reserva amb aquest codig.");
+            System.out.println("No existeix cap reserva amb aquest codi.");
             return;
         }
 
@@ -331,7 +331,13 @@ public class App {
      */
     public static void consultarDisponibilitat() {
         // TODO: Mostrar lliures i ocupades
-    }
+     System.out.println("\n===== DISPONIBILITAT HABITACIONS =====");
+    System.out.println("Tipus" + "        " +"Lliures"+ "    " + "Ocupades");
+
+    mostrarDisponibilitatTipus(TIPUS_ESTANDARD);
+    mostrarDisponibilitatTipus(TIPUS_SUITE);
+    mostrarDisponibilitatTipus(TIPUS_DELUXE);
+}
 
     /**
      * Funció recursiva. Mostra les dades de totes les reserves

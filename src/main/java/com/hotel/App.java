@@ -174,7 +174,11 @@ public class App {
         int usuariTipusHab = 0;
 
         do {
+            System.out.println("\n1. " + TIPUS_ESTANDARD);
+            System.out.println("2. " + TIPUS_SUITE);
+            System.out.println("3. " + TIPUS_DELUXE);
             usuariTipusHab = llegirEnter("\nSeleccione un tipus d'habitació: ");
+           
         } while (usuariTipusHab < 1 || usuariTipusHab > 3);
 
         switch (usuariTipusHab) {
@@ -345,7 +349,23 @@ public class App {
      */
     public static void llistarReservesPerTipus(int[] codis, String tipus) {
         // TODO: Implementar recursivitat
+          if (codis.length == 0) {
+        return;
     }
+
+    int codiActual = codis[0];
+    ArrayList<String> dades = reserves.get(codiActual);
+
+    if (dades.get(0).equals(tipus)) {
+        mostrarDadesReserva(codiActual);
+    }
+
+    int[] nouCodis = new int[codis.length - 1];
+    System.arraycopy(codis, 1, nouCodis, 0, nouCodis.length);
+
+     llistarReservesPerTipus(nouCodis, tipus);
+}
+    
 
     /**
      * Permet consultar els detalls d'una reserva introduint el codi.
@@ -370,7 +390,26 @@ public class App {
     public static void obtindreReservaPerTipus() {
         System.out.println("\n===== CONSULTAR RESERVES PER TIPUS =====");
         // TODO: Llistar reserves per tipus
+        String tipus = seleccionarTipusHabitacio();
+
+    if (reserves.isEmpty()) {
+        System.out.println("No hi ha reserves.");
+        return;
     }
+
+    int[] codis = new int[reserves.size()];
+    int i = 0;
+
+    for (int codi : reserves.keySet()) {
+        codis[i] = codi;
+        i++;
+    }
+
+    System.out.println("\nReserves del tipus \"" + tipus + "\":");
+    llistarReservesPerTipus(codis, tipus);
+}
+
+    
 
     /**
      * Consulta i mostra en detall la informació d'una reserva.

@@ -102,7 +102,7 @@ public class App {
         System.out.println("1. Reservar una habitació");
         System.out.println("2. Alliberar una habitació");
         System.out.println("3. Consultar disponibilitat");
-        System.out.println("4. COnsultar dades d'una reserva");
+        System.out.println("4. Consultar dades d'una reserva");
         System.out.println("5. Consultar reserves per tipus");
         System.out.println("6. Ixir");
     }
@@ -122,10 +122,10 @@ public class App {
                 consultarDisponibilitat();
                 break;
             case 4:
-                obtindreReservaPerTipus();
+                obtindreReserva();
                 break;
             case 5:
-                obtindreReserva();
+                obtindreReservaPerTipus();
                 break;
             case 6:
                 break;
